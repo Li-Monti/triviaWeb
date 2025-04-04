@@ -4,8 +4,10 @@ import QuestionCard from "../components/questionCard";
 import { fetchQuestions } from "../services/api";
 
 const TriviaPage = () => {
-  const location = useLocation();
-  const { value1:category,value2: difficulty } = location.state || {};
+  const location = useLocation(); //Se extraen los valores de useLocation y se guardan en location
+  const { value1:category,value2: difficulty } = location.state || {}; //Se declara valor1 y valor2
+  
+  
   const [questions, setQuestions] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [score, setScore] = useState(0);
@@ -14,7 +16,7 @@ const TriviaPage = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
 
-  useEffect(() => {
+  useEffect(() => { //Esperar para solicitar los datos category y difficuly, sino se bloquea la API
     let timeout = setTimeout(() => {
       if (category && difficulty) {
         fetchQuestions(category, difficulty)

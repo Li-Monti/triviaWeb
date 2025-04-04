@@ -1,5 +1,6 @@
 export const fetchQuestions = async (value1, value2) => {
-  const categoryParam = value1 ? `category=${value1}` : "";
+  //se definen los valores para editar la API
+  const categoryParam = value1 ? `category=${value1}` : ""; 
   const difficultyParam = value2 ? `difficulty=${value2}` : "";
   
   const API_URL = `https://opentdb.com/api.php?amount=5&${categoryParam}&${difficultyParam}&type=multiple`;
