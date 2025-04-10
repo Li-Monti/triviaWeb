@@ -1,70 +1,131 @@
 /* styles.css */
 body {
-    background: linear-gradient(135deg, #cce5ff, #e6ccff);
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .question-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 600px;
-    width: 100%;
-    margin: 20px auto;
-  }
-  
-  .answer-button {
-    background-color: #fffdd0;
-    border: 2px solid #fffdd0;
-    padding: 10px 20px;
-    margin: 10px 0;
-    width: 100%;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .answer-button:hover {
-    background-color: #ffe680;
-  }
-  
-  .answer-button.selected {
-    background-color: #fffdd0;
-    border-color: #ffcc00;
-  }
-  
-  .confirm-button {
-    margin-top: 20px;
-    background-color: #fffdd0;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .confirm-button:hover {
-    background-color: #ffe680;
-  }
-  
-  .confirm-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
+  background: linear-gradient(135deg, #cce5ff, #e6ccff);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.menu-form {
+  margin: 20px 0;
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group select {
+  padding: 8px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.confirm-button {
+  margin-top: 20px;
+  background-color: #fffdd0;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+  background-color: #ffe680;
+}
+
+.confirm-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+/* styles.css */
+body {
+  background: linear-gradient(135deg, #cce5ff, #e6ccff);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.question-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.answer-button {
+  background-color: #fffdd0;
+  border: 2px solid #fffdd0;
+  padding: 10px 20px;
+  margin: 10px 0;
+  width: 100%;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.answer-button:hover {
+  background-color: #ffe680;
+}
+
+.answer-button.selected {
+  background-color: #fffdd0;
+  border-color: #ffcc00;
+}
+
+.confirm-button {
+  margin-top: 20px;
+  background-color: #fffdd0;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+  background-color: #ffe680;
+}
+
+.confirm-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

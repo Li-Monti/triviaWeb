@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import QuestionCard from "../components/questionCard";
 import { fetchQuestions } from "../services/api";
 
-const triviaPage = () => {
+const TriviaPage = () => {
+  const location = useLocation(); //Se extraen los valores de useLocation y se guardan en location
+  const { value1:category,value2: difficulty } = location.state || {}; //Se declara valor1 y valor2
+  
+  
   const [questions, setQuestions] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [score, setScore] = useState(0);
@@ -11,26 +16,29 @@ const triviaPage = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
 
-  useEffect(() => {
-    const loadQuestions = async () => {
-      try {
-        const data = await fetchQuestions();
-        setQuestions(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error al cargar las preguntas:", error);
+  useEffect(() => { //Esperar para solicitar los datos category y difficuly, sino se bloquea la API
+    let timeout = setTimeout(() => {
+      if (category && difficulty) {
+        fetchQuestions(category, difficulty)
+          .then((data) => {
+            setQuestions(data);
+            setLoading(false);
+          })
+          .catch((error) => console.error("Error al cargar las preguntas:", error));
       }
-    };
-    loadQuestions();
-  }, []);
+      console.log("Opciones seleccionadas:",  category, difficulty);
+    }, 1000); // Espera 1 segundo antes de hacer la solicitud
+  
+    return () => clearTimeout(timeout); // Limpia el timeout si el usuario cambia la página rápido
+    
+  }, [category, difficulty]);
 
-  // Actualizar las respuestas mezcladas solo cuando cambia la pregunta actual
+  // Actualizar respuestas mezcladas solo cuando cambia la pregunta actual
   useEffect(() => {
     if (questions.length > 0) {
       const currentQuestion = questions[currentIdx];
       const answers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
-      const shuffled = answers.sort(() => Math.random() - 0.5);
-      setShuffledAnswers(shuffled);
+      setShuffledAnswers(answers.sort(() => Math.random() - 0.5));
     }
   }, [questions, currentIdx]);
 
@@ -46,29 +54,23 @@ const triviaPage = () => {
     const currentQuestion = questions[currentIdx];
     setShowFeedback(true);
 
-    if (selectedAnswer === currentQuestion.correct_answer) {
+    const isCorrect = selectedAnswer === currentQuestion.correct_answer;
+    if (isCorrect) {
       setScore((prev) => prev + 1);
-      alert("¡Correcto!");
-    } else {
-      alert(`Incorrecto. La respuesta correcta era: ${currentQuestion.correct_answer}`);
     }
 
     setTimeout(() => {
       if (currentIdx < questions.length - 1) {
         setCurrentIdx((prev) => prev + 1);
       } else {
-        alert(
-          `Fin de la trivia. Tu puntaje: ${
-            score + (selectedAnswer === currentQuestion.correct_answer ? 1 : 0)
-          } / ${questions.length}`
-        );
-        // Reiniciar el juego (opcional)
+        alert(`Fin de la trivia. Tu puntaje: ${score + (isCorrect ? 1 : 0)} / ${questions.length}`);
         setCurrentIdx(0);
         setScore(0);
       }
       setSelectedAnswer(null);
       setShowFeedback(false);
     }, 1500);
+    
   };
 
   if (loading) return <p className="text-center mt-8">Cargando preguntas...</p>;
@@ -76,13 +78,10 @@ const triviaPage = () => {
 
   return (
     <div className="container">
-      <div>
-        <h1>Trivia Lab</h1>
-        <p>Puntaje: {score}</p>
-        <p>
-          Pregunta {currentIdx + 1} de {questions.length}
-        </p>
-      </div>
+      <h1>Trivia Lab</h1>
+      <p>Puntaje: {score}</p>
+      <p>Pregunta {currentIdx + 1} de {questions.length}</p>
+
       <QuestionCard
         question={questions[currentIdx].question}
         answers={shuffledAnswers}
@@ -90,6 +89,7 @@ const triviaPage = () => {
         selectedAnswer={selectedAnswer}
         disabled={showFeedback}
       />
+
       <button
         disabled={!selectedAnswer || showFeedback}
         onClick={handleConfirm}
@@ -99,6 +99,7 @@ const triviaPage = () => {
       </button>
     </div>
   );
+  
 };
 
-export default triviaPage;
+export default TriviaPage;
