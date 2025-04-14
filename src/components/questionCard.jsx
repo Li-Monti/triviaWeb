@@ -1,7 +1,7 @@
-import React from "react";
-import AnswerButton from "./AnswerButton";
+"use client"
+import AnswerButton from "./AnswerButton"
 
-const questionCard = ({ question, answers, onAnswerClick, selectedAnswer, disabled }) => {
+const QuestionCard = ({ question, answers, onAnswerClick, selectedAnswer, disabled, correctAnswer, showFeedback }) => {
   return (
     <div className="question-card">
       <h2 dangerouslySetInnerHTML={{ __html: question }} />
@@ -13,11 +13,13 @@ const questionCard = ({ question, answers, onAnswerClick, selectedAnswer, disabl
             onClick={() => onAnswerClick(answer)}
             isSelected={selectedAnswer === answer}
             disabled={disabled}
+            isCorrect={answer === correctAnswer}
+            showFeedback={showFeedback}
           />
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default questionCard;
+export default QuestionCard

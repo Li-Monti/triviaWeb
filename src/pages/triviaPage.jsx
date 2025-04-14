@@ -1,105 +1,136 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import QuestionCard from "../components/questionCard";
-import { fetchQuestions } from "../services/api";
+"use client"
+
+import { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import QuestionCard from "../components/QuestionCard"
+import WinModal from "../components/winModal"
+import EndModal from "../components/endTrivia"
+import { fetchQuestions } from "../services/api"
+
+
+
 
 const TriviaPage = () => {
-  const location = useLocation(); //Se extraen los valores de useLocation y se guardan en location
-  const { value1:category,value2: difficulty } = location.state || {}; //Se declara valor1 y valor2
+  const location = useLocation()
+  const { value1: category, value2: difficulty } = location.state || {}
   
-  
-  const [questions, setQuestions] = useState([]);
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [shuffledAnswers, setShuffledAnswers] = useState([]);
+  const [questions, setQuestions] = useState([])
+  const [questionIdx, setQuestionIdx] = useState(0)
+  const [score, setScore] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [selectedAnswer, setSelectedAnswer] = useState(null)
+  const [showFeedback, setShowFeedback] = useState(false)
+  const [shuffledAnswers, setShuffledAnswers] = useState([])
+  const [showWinModal, setShowWinModal] = useState(false)
+  const [showEndModal, setShowEndModal] = useState(false)
 
-  useEffect(() => { //Esperar para solicitar los datos category y difficuly, sino se bloquea la API
-    let timeout = setTimeout(() => {
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
       if (category && difficulty) {
         fetchQuestions(category, difficulty)
           .then((data) => {
-            setQuestions(data);
-            setLoading(false);
+            setQuestions(data)
+            setLoading(false)
           })
-          .catch((error) => console.error("Error al cargar las preguntas:", error));
+          .catch((error) => console.error("Error al cargar las preguntas:", error))
       }
-      console.log("Opciones seleccionadas:",  category, difficulty);
-    }, 1000); // Espera 1 segundo antes de hacer la solicitud
-  
-    return () => clearTimeout(timeout); // Limpia el timeout si el usuario cambia la página rápido
-    
-  }, [category, difficulty]);
+      console.log("Opciones:", category, difficulty)
+    }, 1000)
 
-  // Actualizar respuestas mezcladas solo cuando cambia la pregunta actual
+    return () => clearTimeout(timeout)
+  }, [category, difficulty])
+
   useEffect(() => {
     if (questions.length > 0) {
-      const currentQuestion = questions[currentIdx];
-      const answers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
-      setShuffledAnswers(answers.sort(() => Math.random() - 0.5));
+      const currentQuestion = questions[questionIdx]
+      const answers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer]
+      setShuffledAnswers(answers.sort(() => Math.random() - 0.5))
     }
-  }, [questions, currentIdx]);
+  }, [questions, questionIdx])
 
   const handleAnswerSelect = (answer) => {
     if (!showFeedback) {
-      setSelectedAnswer(answer);
+      setSelectedAnswer(answer)
     }
-  };
+  }
 
   const handleConfirm = () => {
-    if (!selectedAnswer) return;
+    if (!selectedAnswer) return
 
-    const currentQuestion = questions[currentIdx];
-    setShowFeedback(true);
+    const currentQuestion = questions[questionIdx]
+    setShowFeedback(true)
 
-    const isCorrect = selectedAnswer === currentQuestion.correct_answer;
+    const isCorrect = selectedAnswer === currentQuestion.correct_answer
     if (isCorrect) {
-      setScore((prev) => prev + 1);
+      const newScore = score + 10
+      
+      console.log(newScore)
+      setScore(newScore)
     }
 
     setTimeout(() => {
-      if (currentIdx < questions.length - 1) {
-        setCurrentIdx((prev) => prev + 1);
-      } else {
-        alert(`Fin de la trivia. Tu puntaje: ${score + (isCorrect ? 1 : 0)} / ${questions.length}`);
-        setCurrentIdx(0);
-        setScore(0);
+      if (questionIdx < questions.length - 1 ) {
+        setQuestionIdx((prev) => prev + 1)
+        
+      } else if (score >= 70){
+        WinModal(true)
+        setQuestionIdx(0)
+        setScore(0)
+      }else if(score < 70){
+        EndModal(true)
+        setQuestionIdx(0)
+        setScore(0)
       }
-      setSelectedAnswer(null);
-      setShowFeedback(false);
-    }, 1500);
-    
-  };
+      setSelectedAnswer(null)
+      setShowFeedback(false)
+    }, 1500)
+  }
 
-  if (loading) return <p className="text-center mt-8">Cargando preguntas...</p>;
-  if (questions.length === 0) return <p className="text-center mt-8">No se encontraron preguntas.</p>;
+  const handleCloseWinModal = () => {
+    setShowWinModal(false)
+    setQuestionIdx(0)
+    setScore(0)
+    setSelectedAnswer(null)
+    setShowFeedback(false)
+  }
+  const handleCloseEndModal = () => {
+    setShowEndModal(false)
+    setQuestionIdx(0)
+    setScore(0)
+    setSelectedAnswer(null)
+    setShowFeedback(false)
+  }
+
+  if (loading) return <p className="text-center mt-8">Cargando preguntas...</p>
+  if (questions.length === 0) return <p className="text-center mt-8">No se encontraron preguntas.</p>
 
   return (
     <div className="container">
       <h1>Trivia Lab</h1>
       <p>Puntaje: {score}</p>
-      <p>Pregunta {currentIdx + 1} de {questions.length}</p>
+      <p>
+        Pregunta {questionIdx + 1} de {questions.length}
+      </p>
 
       <QuestionCard
-        question={questions[currentIdx].question}
+        question={questions[questionIdx].question}
         answers={shuffledAnswers}
         onAnswerClick={handleAnswerSelect}
         selectedAnswer={selectedAnswer}
         disabled={showFeedback}
+        correctAnswer={questions[questionIdx].correct_answer}
+        showFeedback={showFeedback}
       />
 
-      <button
-        disabled={!selectedAnswer || showFeedback}
-        onClick={handleConfirm}
-        className="confirm-button"
-      >
+      <button disabled={!selectedAnswer || showFeedback} onClick={handleConfirm} className="confirm-button">
         Confirmar
       </button>
-    </div>
-  );
-  
-};
 
-export default TriviaPage;
+      {showWinModal && <WinModal score={score} totalQuestions={questions.length} onClose={handleCloseWinModal} />}
+      {showEndModal && <EndModal score={score} totalQuestions={questions.length} onClose={handleCloseEndModal} />}
+    </div>
+  )
+}
+
+export default TriviaPage
