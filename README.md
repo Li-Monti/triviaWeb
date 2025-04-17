@@ -56,6 +56,11 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=medium")
     return data.results;
 
 
-Contribuidores
-<table> <tr> <td align="center"> <a href="https://github.com/nicoediaz93"> <img src="https://avatars.githubusercontent.com/nicoediaz93" width="100px;" alt="Nicolás Díaz"/> <br/> <sub><b>nicoediaz93</b></sub> </a> </td> <td align="center"> <a href="https://github.com/juanrolando"> <img src="https://avatars.githubusercontent.com/juanrolando" width="100px;" alt="Juan Rolando"/> <br/> <sub><b>Juan Rolando</b></sub> </a> </td> <td align="center"> <a href="https://github.com/li-monti"> <img src="https://avatars.githubusercontent.com/li-monti" width="100px;" alt="Li Monti"/> <br/> <sub><b>Li-Monti</b></sub> </a> </td> </tr> </table>
+
+| Contribuidores    |
+|-------------------|
+| Li/Monti          |
+| juanrolando       |
+| nicoediaz93       |
+
 
