@@ -1,9 +1,5 @@
 # 🎮 Trivia Game - README
 
-<div align="center">
-  <img src="./public/pregunta.png" alt="Captura de pantalla del juego" width="400">
-</div>
-
 ## 📝 Descripción
 Una trivia de preguntas, en la cual tendras que responder 10 preguntas. Desarrollada con React, consume la API de [Open Trivia DB](https://opentdb.com/api_config.php).
 
