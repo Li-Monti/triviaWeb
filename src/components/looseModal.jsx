@@ -10,14 +10,14 @@ export function EndModal ({ score, onClose}) {
 
 
   return (
-    <div className="lose-modal-overlay">
-      <div className="lose-modal">
+    <div className="loose-modal-overlay">
+      <div className="loose-modal">
         <h2>¡Malas Noticias!</h2>
         <p>Trivia Finalizada</p>
         <p>
           Has perdido, tu puntaje fue {score}/100
         </p>
-        <div className="lose-modal-buttons">
+        <div className="loose-modal-buttons">
           <button className="restart-button" onClick={handleRestart}>
             Volver al Menú
           </button>

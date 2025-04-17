@@ -23,7 +23,7 @@ src/
 ├── assets/
 ├── components/
 │   ├── answerButton.jsx
-│   ├── loseModal.jsx
+│   ├── looseModal.jsx
 │   ├── questionCard.jsx
 │   └── winModal.jsx
 ├── pages/

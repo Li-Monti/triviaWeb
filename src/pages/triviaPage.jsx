@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import QuestionCard from "../components/questionCard"
 import WinModal from "../components/winModal"
-import EndModal from "../components/loseModal"
+import EndModal from "../components/looseModal"
 import { fetchQuestions } from "../services/api"
 
 export function TriviaPage() {
@@ -100,7 +100,7 @@ export function TriviaPage() {
 
   return (
     <div className="container">
-      <h1>Trivia Lab</h1>
+      <h1>PreguntameYa</h1>
       {!showWinModal && !showEndModal && (
         <>
           <p>Puntaje: {score}</p>
