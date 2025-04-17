@@ -13,7 +13,7 @@ const WinModal = ({ score, onClose }) => {
       <div className="win-modal">
         <h2>¡Felicidades!</h2>
         <p>
-          Has ganado con un puntaje de {score}/100
+          Has ganado con un puntaje de {score}/50
         </p>
         <div className="win-modal-buttons">
           <button className="restart-button" onClick={handleRestart}>

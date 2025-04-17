@@ -15,7 +15,7 @@ export function EndModal ({ score, onClose}) {
         <h2>¡Malas Noticias!</h2>
         <p>Trivia Finalizada</p>
         <p>
-          Has perdido, tu puntaje fue {score}/100
+          Has perdido, tu puntaje fue {score}/50
         </p>
         <div className="loose-modal-buttons">
           <button className="restart-button" onClick={handleRestart}>

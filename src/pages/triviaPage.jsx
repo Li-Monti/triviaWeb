@@ -66,7 +66,7 @@ export function TriviaPage() {
       if (questionIdx < questions.length - 1) {
         setQuestionIdx((prev) => prev + 1)
       } else {
-        if (score + (isCorrect ? 10 : 0) >= 70) {
+        if (score + (isCorrect ? 10 : 0) >= 30) {
           setShowWinModal(true)
         } else {
           setShowEndModal(true)
