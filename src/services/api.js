@@ -11,6 +11,7 @@ export const fetchQuestions = async (value1, value2) => {
       throw new Error("Error al cargar las preguntas");
     }
     const data = await response.json();
+    
     return data.results;
   } catch (err) {
     console.error("Error al cargar las preguntas:", err);

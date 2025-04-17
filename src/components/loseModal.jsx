@@ -1,22 +1,23 @@
-"use client"
 import { useNavigate } from "react-router-dom"
 
-const EndModal = ({ score, onClose }) => {
+export function EndModal ({ score, onClose}) {
   const navigate = useNavigate()
 
   const handleRestart = () => {
     navigate("/")
   }
 
+
+
   return (
-    <div className="win-modal-overlay">
-      <div className="win-modal">
+    <div className="lose-modal-overlay">
+      <div className="lose-modal">
         <h2>¡Malas Noticias!</h2>
         <p>Trivia Finalizada</p>
         <p>
           Has perdido, tu puntaje fue {score}/100
         </p>
-        <div className="win-modal-buttons">
+        <div className="lose-modal-buttons">
           <button className="restart-button" onClick={handleRestart}>
             Volver al Menú
           </button>

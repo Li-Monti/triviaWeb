@@ -1,7 +1,6 @@
 "use client"
 
 const AnswerButton = ({ text, onClick, isSelected, disabled, isCorrect, showFeedback }) => {
-  // Determine the CSS class based on selection and correctness
   const getButtonClass = () => {
     let className = "answer-button"
 
@@ -9,12 +8,10 @@ const AnswerButton = ({ text, onClick, isSelected, disabled, isCorrect, showFeed
       className += " selected"
     }
 
-    // Only show correctness colors when feedback is being shown
     if (showFeedback) {
       if (isCorrect) {
         className += " correct"
       } else {
-        // Show all incorrect answers in red during feedback
         className += " incorrect"
       }
     }

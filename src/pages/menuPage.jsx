@@ -6,11 +6,9 @@ const MenuPage = () => {
   const [value1, setOption1] = useState("");
   const [value2, setOption2] = useState("");
   
-  // Usar el hook useNavigate de React Router
   const navigate = useNavigate();
 
   const handlePlay = () => {
-    // Redirigir a la página de trivia y pasar las opciones seleccionadas como state
     navigate("/trivia", { state: { value1, value2 } });
     console.log("Opciones seleccionadas:",  value1, value2);
   };
@@ -18,7 +16,7 @@ const MenuPage = () => {
   return (
     <div className="container">
       <div>
-        <h1>Menú Principal</h1>
+        <h1>Bienvenido a Preguntame</h1>
         <p>Selecciona las opciones y presiona "Jugar" para comenzar</p>
       </div>
       <div className="menu-form">
@@ -29,7 +27,7 @@ const MenuPage = () => {
             value={value1}
             onChange={(e) => setOption1(e.target.value)}
           >
-            <option value="">Random</option>
+            <option value="">Seleccione la categoria</option>
             <option value="9">General Knowledge</option>
             <option value="10">Enterteinment: Books</option>
             <option value="11">Enterteinment: Music</option>
@@ -63,7 +61,7 @@ const MenuPage = () => {
             value={value2}
             onChange={(e) => setOption2(e.target.value)}
           >
-            <option value="">Random</option>
+            <option value="">Seleccione la dificultad</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
